@@ -9,6 +9,8 @@ function App() {
 
   const [player, setPlayer] = useState("X");
 
+  const [result, setResult] = useState({ winner: "none", state: "none"});
+
   const chooseSquare = (square) => {
     setBoard(board.map((val, index) => {
       if (index === square && val === "") {
@@ -22,6 +24,22 @@ function App() {
     } else {
       setPlayer("X");
     }
+  };
+
+  const checkWin = () => {
+    Patterns.forEach((currPattern) => {
+      const firstPlayer = board[currPattern[0]];
+      let foundWinningPattern = true;
+      currPattern.forEach((index) => {
+        if (board[index] != firstPlayer) {
+          foundWinningPattern = false;
+        }
+      });
+
+      if (foundWinningPattern) {
+        setResult({winner: player, state: "won"})
+      }
+    });
   };
 
   return (
